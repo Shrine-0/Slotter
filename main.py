@@ -12,57 +12,69 @@ symbol_count = {
     "C": 6,
     "D": 8,
 }
+symbol_value = {
+    "A": 5,
+    "B": 4,
+    "C": 3,
+    "D": 2,
+}
 
 
-def get_slot_machine_spin(rows,cols,symbols):
+def get_slot_machine_spin(rows, cols, symbols, lines):
     all_symbols = []
 
     # list comprehension  --- 1
     count = [symbols for symbols, counts in symbol_count.items() for _ in range(counts)]
-    print(count)
+    # print(count)
 
     # simple method       --- 2 s
     for symbols, counts in symbol_count.items():
-        print(counts)
+        # print(counts)
         for _ in range(counts):
             all_symbols.append(symbols)
 
-    print(all_symbols)
+    # print(all_symbols)
     columns = []
-    
-    for _ in range(rows):
+
+    for _ in range(lines):
         column = []
-        current_symbols = all_symbols[:]# : colon essential for copying not reference copy but creating a new reference 
-        
+        current_symbols = all_symbols[
+            :
+        ]  # : colon essential for copying not reference copy but creating a new reference
+
         for _ in range(cols):
             value = rd.choice(current_symbols)
             current_symbols.remove(value)
             column.append(value)
-            
+
         columns.append(column)
-             
+
     return columns
 
+
 def print_slot_machine(columns):
-    i=0
+    i = 0
     while True:
-        for ind,value in enumerate(column for column in columns):
+        for ind, value in enumerate(column for column in columns):
             if i == ind:
-                j=0
-                current_value=[C_values for C_values in value]
-                for ind,value in enumerate(current_value):
-                    if j * 2 <= ind + 1 :
-                        
-                        print(value , end= " | ") 
-                        
+                j = 0
+                current_value = [C_values for C_values in value]
+                for ind, value in enumerate(current_value):
+                    if j * 2 <= ind + 1:
+                        print(value, end=" | ")
+
                     else:
-                        print(value , end="")
-                    j+=1 
-                print('\n')
-                i+=1
+                        print(value, end="")
+                    j += 1
+                print("\n")
+                i += 1
             else:
-                pass  
+                pass
         break
+
+
+# def check_for_wins(columns):
+
 
 def deposit():
     while True:
@@ -133,7 +145,7 @@ def get_bet_check(balance, lines):
         # print(bet)
         bet = int(get_bet())
         total = lines * bet
-        print(total)
+        # print(total)
 
         if balance < total:
             print(
@@ -144,7 +156,7 @@ def get_bet_check(balance, lines):
             # final_balance = balance - total
             break
             # print(f"your total after youve placed youre bet will be ${final_balance}")
-        print(f"you are betting ${bet} on lines : {lines} for a total of ${total}")
+    print(f"you are betting ${bet} on lines : {lines} for a total of ${total}")
     return True
 
 
@@ -152,18 +164,17 @@ def get_bet_check(balance, lines):
 def main():
     balance = deposit()
     lines = int(get_maxno_of_lines())
-    # bet = int(get_bet())
-    # total = lines * bet
-    # print(total)
-    # int(get_bet_check(balance,total))
+
     value = get_bet_check(int(balance), lines)
     if value == True:
-        columns=get_slot_machine_spin(ROWS,COLS,symbol_count)
+        columns = get_slot_machine_spin(ROWS, COLS, symbol_count, lines)
+        print(columns)
         print_slot_machine(columns)
+        # check_for_wins(columns)
 
 
 main()
 
 
-# if __name__=="__main__":
-#     print("amount stored succesfully")
+if __name__ == "__main__":
+    print("Thanks for playing the Slot machine by NT")
