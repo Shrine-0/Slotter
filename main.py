@@ -12,6 +12,7 @@ symbol_count = {
     "C": 6,
     "D": 8,
 }
+
 symbol_value = {
     "A": 5,
     "B": 4,
@@ -73,9 +74,30 @@ def print_slot_machine(columns):
         break
 
 
-# def check_for_wins(columns):
-
-
+def check_for_wins(columns,lines,balance,symbol_value,bet):
+    # columns=[["C","C","C"],["B","B","B"]]
+    winnings = 0
+    
+    for i in range(lines):
+        # print(f"i : {i}")
+        value = 0
+        for j in range(len(columns[i])):
+            # print(f"j : {j}")
+            
+            if columns[i][0] != columns[i][j]:
+                # print("break",columns[i][j])
+                value = 0 
+                break
+            else:
+                # print(columns[i][j])
+                value += symbol_value[columns[i][j]]* bet 
+            # print(f"value : {value}")      
+            
+            totalvalue = value 
+        winnings =totalvalue
+        print(f"total winnings for line {i+1} : {winnings}")   
+    
+    
 def deposit():
     while True:
         print("desposit amount : $")
@@ -157,20 +179,20 @@ def get_bet_check(balance, lines):
             break
             # print(f"your total after youve placed youre bet will be ${final_balance}")
     print(f"you are betting ${bet} on lines : {lines} for a total of ${total}")
-    return True
+    return True,bet
 
 
 # get_maxno_of_lines()
 def main():
     balance = deposit()
     lines = int(get_maxno_of_lines())
-
-    value = get_bet_check(int(balance), lines)
+    value,bet = get_bet_check(int(balance), lines)
+    # print(bet)
     if value == True:
         columns = get_slot_machine_spin(ROWS, COLS, symbol_count, lines)
-        print(columns)
+        # print(columns,"\n")
         print_slot_machine(columns)
-        # check_for_wins(columns)
+        check_for_wins(columns,lines,balance,symbol_value,bet)
 
 
 main()
