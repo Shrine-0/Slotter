@@ -7,7 +7,7 @@
 
 import random as rd
 from time import sleep
-from tqdm import tqdm
+from tqdm import tqdm,trange
 
 MAX_LINES = 3
 MAX_BET = 1000
@@ -28,7 +28,6 @@ symbol_value = {
     "C": 3,
     "D": 2,
 }
-
 
 def get_slot_machine_spin(rows, cols, symbols, lines):
     all_symbols = []
@@ -64,7 +63,9 @@ def print_slot_machine(columns):
     i = 0
     print("\n")
     while True:
-        
+        for _ in tqdm(range(100),desc="Loading your slots",leave=False):
+                # r=rd.random()
+                sleep(0.1)
         for ind, value in enumerate(column for column in columns):
             if i == ind:
                 j = 0
@@ -87,20 +88,25 @@ def check_for_wins(columns,lines,balance,symbol_value,bet):
     # columns=[["C","D","C"],["B","B","B"]]
     winnings = []
     
-    for i in tqdm(range(lines)):
+    for i in range(lines):
+    # for i in tqdm(range(lines),desc="Loading..",leave=False):
         # print(f"i : {i}")
         value = 0
-       
+        for _ in tqdm(range(100),desc="Loading your wins",leave=False):
+                # r=rd.random()
+                sleep(0.01)
         for j in range(len(columns[i])):
             
             # if j>=len(columns[i]):
             #     print(f"j : {j} out of index")
             #     continue
-                
+            
+            
+                    
             if columns[i][0] != columns[i][j] :
                 # print("break",columns[i][j]5
-                r=rd.randint(0,2)
-                sleep(r)
+                # r=rd.random()
+                # sleep(r)
                 value = 0
                 totalvalue = value
                 break
@@ -111,9 +117,11 @@ def check_for_wins(columns,lines,balance,symbol_value,bet):
                 totalvalue = value    
             
         winnings.append(totalvalue)
-        
-    for i in range(len(winnings)):   
         print(f"total winnings for line {i} : {winnings[i]}") 
+        
+    # for i in tqdm(range(len(winnings)),desc="Loading..",leave=False):
+    #     sleep(2)   
+    #     print(f"total winnings for line {i} : {winnings[i]}") 
     print("\n")
         
     
@@ -204,9 +212,18 @@ def get_bet_check(balance, lines):
     print(f"you are betting ${bet} on number of lines : {lines} for a total of ${total}")
     return True,bet
 
+def loading_game():
+    # t= trange(10,desc = "loading",leave=False)
+    # for i in t:
+    #     t.set_description("loading please wait",refresh=True)
+    #     sleep(2)
+    for i in tqdm(range(5),desc="Loading",leave=False):
+        sleep(0.5)
+
 
 # get_maxno_of_lines()
 def main():
+    loading_game()
     balance = deposit()
     lines = int(get_maxno_of_lines())
     value,bet = get_bet_check(int(balance), lines)
@@ -222,5 +239,5 @@ main()
 
 
 if __name__ == "__main__":
-    print("\n")
+    
     print("Thanks for playing the Slot machine by NT")
