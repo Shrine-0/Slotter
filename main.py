@@ -1,11 +1,13 @@
-# #! alertbar -- check_for_wins doesnt work as intented
+# #! alertbar 
 # # highlight
 # ? should this be publicised 
-# TODO write a winnings check function and integrate 
+# TODO make a loading bar or load tab before you start the game
 # Todo make it modular by adding classes
 # @param check_for_wins()
 
 import random as rd
+from time import sleep
+from tqdm import tqdm
 
 MAX_LINES = 3
 MAX_BET = 1000
@@ -83,9 +85,9 @@ def print_slot_machine(columns):
 
 def check_for_wins(columns,lines,balance,symbol_value,bet):
     # columns=[["C","D","C"],["B","B","B"]]
-    winnings = 0
+    winnings = []
     
-    for i in range(lines):
+    for i in tqdm(range(lines)):
         # print(f"i : {i}")
         value = 0
        
@@ -96,7 +98,9 @@ def check_for_wins(columns,lines,balance,symbol_value,bet):
             #     continue
                 
             if columns[i][0] != columns[i][j] :
-                # print("break",columns[i][j])
+                # print("break",columns[i][j]5
+                r=rd.randint(0,2)
+                sleep(r)
                 value = 0
                 totalvalue = value
                 break
@@ -106,9 +110,12 @@ def check_for_wins(columns,lines,balance,symbol_value,bet):
                 # print(f"value : {value}")  
                 totalvalue = value    
             
-        winnings = totalvalue
+        winnings.append(totalvalue)
         
-        print(f"total winnings for line {i+1} : {winnings}")   
+    for i in range(len(winnings)):   
+        print(f"total winnings for line {i} : {winnings[i]}") 
+    print("\n")
+        
     
 
 def deposit():
