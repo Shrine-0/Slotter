@@ -1,3 +1,10 @@
+# #! alertbar -- check_for_wins doesnt work as intented
+# # highlight
+# ? should this be publicised 
+# TODO write a winnings check function and integrate 
+# Todo make it modular by adding classes
+# @param check_for_wins()
+
 import random as rd
 
 MAX_LINES = 3
@@ -39,9 +46,7 @@ def get_slot_machine_spin(rows, cols, symbols, lines):
 
     for _ in range(lines):
         column = []
-        current_symbols = all_symbols[
-            :
-        ]  # : colon essential for copying not reference copy but creating a new reference
+        current_symbols = all_symbols[:]  # : colon essential for copying not reference copy but creating a new reference
 
         for _ in range(cols):
             value = rd.choice(current_symbols)
@@ -75,34 +80,41 @@ def print_slot_machine(columns):
 
 
 def check_for_wins(columns,lines,balance,symbol_value,bet):
-    # columns=[["C","C","C"],["B","B","B"]]
+    # columns=[["C","D","C"],["B","B","B"]]
     winnings = 0
     
     for i in range(lines):
-        # print(f"i : {i}")
+        print(f"i : {i}")
         value = 0
+       
         for j in range(len(columns[i])):
-            # print(f"j : {j}")
             
-            if columns[i][0] != columns[i][j]:
-                # print("break",columns[i][j])
-                value = 0 
+            if j>=len(columns[i]):
+                print(f"j : {j} out of index")
+                continue
+                
+            if columns[i][0] != columns[i][j] :
+                print("break",columns[i][j])
+                value = 0
+                totalvalue = value
                 break
             else:
-                # print(columns[i][j])
+                print(columns[i][j])
                 value += symbol_value[columns[i][j]]* bet 
-            # print(f"value : {value}")      
+                print(f"value : {value}")  
+                totalvalue = value    
             
-            totalvalue = value 
-        winnings =totalvalue
+        winnings = totalvalue
+        
         print(f"total winnings for line {i+1} : {winnings}")   
     
-    
+
 def deposit():
     while True:
-        print("desposit amount : $")
+        # print("desposit amount : $")
         # amount = input("What you desposit amount : $")
-        amount = input()
+        amount = input("desposit amount : $")
+        print("\n")
 
         # if not amount.isdigit(): or
         if amount.isdigit() == False:
@@ -123,6 +135,7 @@ def get_maxno_of_lines():
         lines = input(
             "no of lines you want to bet in  (1 - " + str(MAX_LINES) + ")?  : "
         )
+        print("\n")
         lines_temp = lines
         # print(lines_temp)
 
@@ -141,7 +154,8 @@ def get_maxno_of_lines():
 
 def get_bet():
     while True:
-        bet = input("what would you like to bet : ")
+        bet = input("what would you like to bet : $")
+        print("\n")
         bet_temp = bet
 
         if bet.isdigit() == False:
