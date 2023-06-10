@@ -60,7 +60,9 @@ def get_slot_machine_spin(rows, cols, symbols, lines):
 
 def print_slot_machine(columns):
     i = 0
+    print("\n")
     while True:
+        
         for ind, value in enumerate(column for column in columns):
             if i == ind:
                 j = 0
@@ -84,24 +86,24 @@ def check_for_wins(columns,lines,balance,symbol_value,bet):
     winnings = 0
     
     for i in range(lines):
-        print(f"i : {i}")
+        # print(f"i : {i}")
         value = 0
        
         for j in range(len(columns[i])):
             
-            if j>=len(columns[i]):
-                print(f"j : {j} out of index")
-                continue
+            # if j>=len(columns[i]):
+            #     print(f"j : {j} out of index")
+            #     continue
                 
             if columns[i][0] != columns[i][j] :
-                print("break",columns[i][j])
+                # print("break",columns[i][j])
                 value = 0
                 totalvalue = value
                 break
             else:
-                print(columns[i][j])
+                # print(columns[i][j])
                 value += symbol_value[columns[i][j]]* bet 
-                print(f"value : {value}")  
+                # print(f"value : {value}")  
                 totalvalue = value    
             
         winnings = totalvalue
@@ -192,7 +194,7 @@ def get_bet_check(balance, lines):
             # final_balance = balance - total
             break
             # print(f"your total after youve placed youre bet will be ${final_balance}")
-    print(f"you are betting ${bet} on lines : {lines} for a total of ${total}")
+    print(f"you are betting ${bet} on number of lines : {lines} for a total of ${total}")
     return True,bet
 
 
@@ -213,4 +215,5 @@ main()
 
 
 if __name__ == "__main__":
+    print("\n")
     print("Thanks for playing the Slot machine by NT")
